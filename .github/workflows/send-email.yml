@@ -2,7 +2,8 @@ name: Send Automated Email
 
 on:
   schedule:
-    - cron: "0 * * * *" 
+    - cron: "0 * * * *"  # runs every hour UTC
+  workflow_dispatch:  # allows manual trigger
 
 jobs:
   send-email:
@@ -15,7 +16,19 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x' 
+          dotnet-version: '8.0.x'
+
+      - name: Skip run before 10 PM AWST
+        run: |
+          # Get current UTC hour
+          current_utc_hour=$(date -u +"%H")
+          # Convert to AWST (UTC+8)
+          current_awst_hour=$(( (current_utc_hour + 8) % 24 ))
+          echo "Current AWST hour: $current_awst_hour"
+          if [ "$current_awst_hour" -lt 22 ]; then
+            echo "Before 10 PM AWST, skipping workflow."
+            exit 0
+          fi
 
       - name: Restore dependencies
         run: dotnet restore EmailSender/EmailSender.csproj
