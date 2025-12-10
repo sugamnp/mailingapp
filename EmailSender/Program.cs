@@ -6,7 +6,7 @@ class Program
     static void Main()
     {
         var email = new MimeMessage();
-        email.From.Add(new MailboxAddress("Sugam Neupne", Environment.GetEnvironmentVariable("EMAIL_FROM")));
+        email.From.Add(new MailboxAddress("Sugam Neupane", Environment.GetEnvironmentVariable("EMAIL_FROM")));
         email.To.Add(new MailboxAddress("Prasamsha Upreti", Environment.GetEnvironmentVariable("EMAIL_TO")));
         email.Subject = "Automated Email";
 
