@@ -2,7 +2,7 @@ name: Send Automated Email
 
 on:
   schedule:
-    - cron: "0 */1 * * *"  # every hour at minute 0 UTC
+    - cron: "0 * * * *" 
 
 jobs:
   send-email:
