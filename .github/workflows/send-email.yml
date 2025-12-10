@@ -3,7 +3,7 @@ name: Send Automated Email
 # Run every 1 hours, and allow manual trigger
 on:
   schedule:
-    - cron: "*/5 * * * *"  # every minute
+    - cron: "*/6 * * * *"  # every minute
   workflow_dispatch:         
 
 jobs:
