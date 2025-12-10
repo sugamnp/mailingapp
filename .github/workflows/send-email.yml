@@ -1,0 +1,33 @@
+name: Send Automated Email
+
+# Run every 5 hours, and allow manual trigger
+on:
+  schedule:
+    - cron: "0 */5 * * *"   # every 1 hours
+  workflow_dispatch:         # allows manual trigger from Actions tab
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'  # or your installed version
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Run Email Sender
+        env:
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+        run: dotnet run --project EmailSender/EmailSender.csproj
