@@ -3,8 +3,8 @@ name: Send Automated Email
 # Run every 5 hours, and allow manual trigger
 on:
   schedule:
-    - cron: "0 */5 * * *"   # every 1 hours
-  workflow_dispatch:         # allows manual trigger from Actions tab
+    - cron: "0 */1 * * *"   # every 1 hours
+  workflow_dispatch:         
 
 jobs:
   send-email:
@@ -17,7 +17,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'  # or your installed version
+          dotnet-version: '8.0.x' 
 
       - name: Restore dependencies
         run: dotnet restore EmailSender/EmailSender.csproj
